@@ -39,18 +39,12 @@ Tree.prototype.addChild=function(value){
 }
 
 Tree.prototype.map=function(func){
-  var root1=this;
-  var root2=new Tree(func(root1.value))
-
+  var root1=this;//ok
+  var root2 = arguments[1] || new Tree(func(root1.value))
+  
   for (var i = 0; i < root1.children.length; i++) {
-      var ch= root2.addChild(func(root1.children[i].value))
-      
-      if( root1.children[i].children!==[]){
-      ch.addChild( root1.children[i].map(func).value)
-
-    }else{return ch.value
-    }
-
+     var that=root2.addChild(func(root1.children[i].value))
+      root1.children[i].map(func,that)
   }
-  return root2;
+return root2;
 }
